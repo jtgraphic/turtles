@@ -1,0 +1,73 @@
+turtle.select(1)
+turtle.refuel()
+print("Refueled turtle!")
+
+gridSize = 4
+
+function nextTick()
+  turlte.turnLeft()
+  turtle.forward()
+  turtle.forward()
+  turtle.forward()
+  turtle.forward()
+  turtle.forward()
+  turtle.forward()
+  turtle.turnRight()
+  turtle.select(2)
+  if not turtle.compare()
+    turtle.dig()
+    turtle.forward()
+    while turtle.detectUp() do
+      turtle.digUp()
+      turtle.up()
+    end
+    while not turtle.detectDown() do
+      turtle.down()
+    end
+  else
+    turtle.place()
+  end
+end
+
+for i = 0, gridSize do
+  for i = 0, gridSize - 1 do
+    turtle.forward()
+    turtle.forward()
+    turtle.forward()
+  end
+  turtle.turnRIght()
+  turtle.forward()
+  turtle.select(1)
+  turtle.place()
+  for i = 0, gridSize -1 do
+    nextTick()
+  end
+  turtle.turnRight()
+  for i = 0, gridSize * 6 do
+    turtle.forward()
+  end
+  turtle.turnLeft()
+  turtle.forward()
+  turtle.turnLeft()
+end
+
+turtle.turnLeft()
+turtle.forward()
+turtle.forward()
+turtle.forward()
+
+for i = 0, (gridSize - 2) * 6 do
+  turtle.forward()
+end
+
+turtle.forward()
+turtle.turnRight()
+turtle.forward()
+turtle.forward()
+turtle.turnLeft()
+
+turtle.select(3)
+turtle.drop()
+
+turtle.turnRight()
+turtle.turnRight()
