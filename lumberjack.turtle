@@ -1,73 +1,90 @@
-turtle.select(1)
-turtle.refuel()
-print("Refueled turtle!")
-
 gridSize = 4
-
-function nextTick()
-  turlte.turnLeft()
-  turtle.forward()
-  turtle.forward()
-  turtle.forward()
-  turtle.forward()
-  turtle.forward()
-  turtle.forward()
-  turtle.turnRight()
-  turtle.select(2)
-  if not turtle.compare()
+returnTrip = ((gridSize - 1) * 5) + 2
+ 
+function goForward(times)
+  if times == nil then
+    times = 1
+  end
+ 
+  for i = 1, times do
+    if turtle.getFuelLevel() < 80 then
+      turtle.select(1)
+      turtle.refuel(3)
+    end
+ 
+    if not turtle.forward() then
+      os.sleep(1)
+      goForward(1)
+    end
+  end
+end
+ 
+function placeOrDig()
+  turtle.select(3)
+  if turtle.compare() then
+    print("found a tree!")
     turtle.dig()
-    turtle.forward()
+    goForward()
+ 
     while turtle.detectUp() do
       turtle.digUp()
       turtle.up()
     end
+ 
     while not turtle.detectDown() do
       turtle.down()
     end
+ 
+    turtle.back()
+    turtle.select(2)
+    turtle.place()
   else
+    turtle.select(2)
     turtle.place()
   end
 end
-
-for i = 0, gridSize do
-  for i = 0, gridSize - 1 do
-    turtle.forward()
-    turtle.forward()
-    turtle.forward()
-  end
-  turtle.turnRIght()
-  turtle.forward()
-  turtle.select(1)
-  turtle.place()
-  for i = 0, gridSize -1 do
-    nextTick()
-  end
+ 
+function nextTick()
+  turtle.turnLeft()
+  goForward(5)
   turtle.turnRight()
-  for i = 0, gridSize * 6 do
-    turtle.forward()
+ 
+  placeOrDig()
+end
+ 
+while true do
+  print("Refueled turtle!")
+ 
+  for i = 1, gridSize do
+    goForward(2)
+    turtle.turnRight()
+    goForward()
+ 
+    placeOrDig()
+ 
+    for j = 2, gridSize do
+      nextTick()
+    end
+ 
+    turtle.turnRight()
+    goForward(returnTrip)
+    turtle.turnLeft()
+    goForward(4)
+    turtle.turnLeft()
   end
+ 
   turtle.turnLeft()
-  turtle.forward()
+ 
+  goForward(returnTrip + 3)
+ 
   turtle.turnLeft()
+ 
+  toDrop = turtle.getItemCount(3) - 1
+  turtle.select(3)
+  turtle.drop(toDrop)
+ 
+  turtle.turnRight()
+  turtle.turnRight()
+ 
+  os.sleep(30)
 end
-
-turtle.turnLeft()
-turtle.forward()
-turtle.forward()
-turtle.forward()
-
-for i = 0, (gridSize - 2) * 6 do
-  turtle.forward()
-end
-
-turtle.forward()
-turtle.turnRight()
-turtle.forward()
-turtle.forward()
-turtle.turnLeft()
-
-turtle.select(3)
-turtle.drop()
-
-turtle.turnRight()
-turtle.turnRight()
