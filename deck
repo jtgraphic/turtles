@@ -1,0 +1,50 @@
+size = 20
+
+function goForward(times)
+  if times == nil then
+    times = 1
+  end
+ 
+  for i = 1, times do
+    if turtle.getFuelLevel() < 80 then
+      turtle.select(1)
+      turtle.refuel(3)
+    end
+ 
+    if not turtle.forward() then
+      os.sleep(1)
+      goForward(1)
+    end
+  end
+end
+
+function placeRow()
+  for i = 2, size do
+    turtle.select(1)
+    turtle.placeDown()
+    goForward()
+  end
+end
+
+for i = 1, size / 2 do
+  for i =1, 16 do
+    turtle.select(i)
+    turtle.transferTo(1)
+  end
+
+  placeRow()
+
+  turtle.select(1)
+  turtle.placeDown()
+  turtle.turnLeft()
+  goForward()
+  turtle.turnLeft()
+
+  placeRow()
+
+  turtle.select(1)
+  turtle.placeDown()
+  turtle.turnRight()
+  goForward()
+  turtle.turnRight()
+end
