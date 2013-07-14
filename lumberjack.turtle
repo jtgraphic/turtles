@@ -51,10 +51,30 @@ function nextTick()
  
   placeOrDig()
 end
+
+function take(slot, number)
+  turtle.select(slot)
+  turtle.suckDown()
+  toDrop = turtle.getItemCount(slot) - number
+
+  if toDrop > 0 then
+    turtle.dropDown(toDrop)
+  end
+end
  
 while true do
-  print("Refueled turtle!")
- 
+  turtle.turnRight()
+  goForward(2)
+  take(2, 64)
+  turtle.back()
+  turtle.back()
+  turtle.turnLeft()
+  goForward(2)
+  take(1, 64)
+  turtle.back()
+  turtle.back()
+  take(3, 1)
+
   for i = 1, gridSize do
     goForward(2)
     turtle.turnRight()
@@ -74,17 +94,13 @@ while true do
   end
  
   turtle.turnLeft()
- 
   goForward(returnTrip + 3)
- 
-  turtle.turnLeft()
  
   toDrop = turtle.getItemCount(3) - 1
   turtle.select(3)
-  turtle.drop(toDrop)
+  turtle.dropDown(toDrop)
  
   turtle.turnRight()
-  turtle.turnRight()
  
-  os.sleep(30)
+  os.sleep(15)
 end
